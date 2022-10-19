@@ -30,6 +30,8 @@ jobs:
           mkdir -p .syncFlag yes| cp -rf testFile.txt ./.syncFlag/
       - name: Commit files # commit the output folder
         run: |
+          git config --global user.email "runner@codence.com"
+          git config --global user.name "Action Runner"
           git add ./.syncFlag
           git commit -m "Flag File"
       - name: Push changes # push the output folder to your repo
