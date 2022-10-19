@@ -27,13 +27,11 @@ jobs:
           echo $NOW > testFile.txt
       - name: Move to output
         run: |
-          mkdir -p output yes| cp -rf testFile.txt ./output/
+          mkdir -p .syncFlag yes| cp -rf testFile.txt ./.syncFlag/
       - name: Commit files # commit the output folder
         run: |
-          git config --local user.email "justin.pfefferle@codence.com"
-          git config --local user.name "GitHub Action test"
-          git add ./output
-          git commit -m "Flag Fule"
+          git add ./syncFlag
+          git commit -m "Flag File"
       - name: Push changes # push the output folder to your repo
         uses: ad-m/github-push-action@master
         with:
