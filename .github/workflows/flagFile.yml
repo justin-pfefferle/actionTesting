@@ -20,9 +20,11 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
+      - name: Set current date as env variable
+        run: echo "NOW=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
       - name: Generate text file
         run: |
-          echo 'Test Manual' > testFile.txt
+          echo $NOW > testFile.txt
       - name: Move to output
         run: |
           mkdir -p output yes| cp -rf testFile.txt ./output/
@@ -31,15 +33,13 @@ jobs:
           git config --local user.email "justin.pfefferle@codence.com"
           git config --local user.name "GitHub Action test"
           git add ./output
-          git commit -m "Add changes"
+          git commit -m "Flag Fule"
       - name: Push changes # push the output folder to your repo
         uses: ad-m/github-push-action@master
         with:
-#           branch: B77 #ignore if your branch is master
           github_token: ${{ secrets.GITHUB_TOKEN }}
           force: true
-      - name: Set current date as env variable
-        run: echo "NOW=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
+
 #       - uses: "finnp/create-file-action@master"
 #         env:
 #           FILE_NAME: "flagFile.txt"
