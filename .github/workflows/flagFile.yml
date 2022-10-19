@@ -18,10 +18,12 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: checkout
+        uses: actions/checkout@v2
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Set current date as env variable
         run: echo "NOW=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
       - uses: "finnp/create-file-action@master"
         env:
-          FILE_NAME: "README.md"
+          FILE_NAME: "flagFile.txt"
           FILE_DATA: "Test"
