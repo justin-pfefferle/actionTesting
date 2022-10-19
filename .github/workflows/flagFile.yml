@@ -18,10 +18,29 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - uses: actions/checkout@v3
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: Generate text file
+        run: |
+          echo 'Test Manual' > testFile.txt
+      - name: Move to output
+        run: |
+          mkdir -p output yes| cp -rf testFile.txt ./output/
+      - name: Commit files # commit the output folder
+        run: |
+          git config --local user.email "justin.pfefferle@codence.com"
+          git config --local user.name "GitHub Action test"
+          git add ./output
+          git commit -m "Add changes"
+      - name: Push changes # push the output folder to your repo
+        uses: ad-m/github-push-action@master
+        with:
+#           branch: B77 #ignore if your branch is master
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          force: true
       - name: Set current date as env variable
         run: echo "NOW=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
-      - uses: "finnp/create-file-action@master"
-        env:
-          FILE_NAME: "flagFile.txt"
-          FILE_DATA: "Test"
+#       - uses: "finnp/create-file-action@master"
+#         env:
+#           FILE_NAME: "flagFile.txt"
+#           FILE_DATA: "Test"
